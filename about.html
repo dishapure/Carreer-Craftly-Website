@@ -1,26 +1,1036 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>About - Career Craftly</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CareerCraftly - Empowering Your Tech Career</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-color: #f0f4f8;
+    --text-color: #333;
+    --card-bg: #f8f9fa;
+    --primary-color: #00bfa6;
+    --header-bg: #1e2a38;
+    --footer-bg: #1e2a38;
+  }
+  [data-theme="dark"] {
+    --bg-color: #0f172a;
+    --text-color: #e2e8f0;
+    --card-bg: #1e293b;
+    --primary-color: #38bdf8;
+    --header-bg: #0f172a;
+    --footer-bg: #0f172a;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  header, footer {
+    background: var(--header-bg);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+  nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
+  }
+  nav a:hover,
+  nav a:focus {
+    color: var(--primary-color);
+  }
+  nav a:hover::after,
+  nav a:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .toggle-theme {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+  }
+  .toggle-theme:hover {
+    background: #00a28a;
+  }
+
+  .hero {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url('https://images.unsplash.com/photo-1531497865144-0464ef8fbf6e?auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.7);
+  }
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.5);
+    max-width: 600px;
+  }
+  .btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,191,166,0.5);
+  }
+  .btn:hover,
+  .btn:focus {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,191,166,0.7);
+    outline: none;
+  }
+
+  .section {
+    padding: 60px 40px;
+    background: var(--bg-color);
+  }
+  .section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: var(--text-color);
+    font-weight: 700;
+  }
+
+  /* Flippable Cards for Explore Tech Niches */
+  .flip-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .flip-card {
+    background: none;
+    perspective: 1000px;
+  }
+
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg);
+  }
+  .flip-card:hover .flip-inner,
+  .flip-card:focus-within .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+  .flip-front {
+    background: var(--card-bg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+    user-select: none;
+  }
+  .flip-back {
+    background: var(--primary-color);
+    color: white;
+    transform: rotateY(180deg);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.4;
+    user-select: none;
+  }
+
+  /* Salary Trends Chart */
+  #salaryChart {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+  }
+
+  /* News Feed */
+  .news-feed {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 30px;
+  }
+  .news-item {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-item img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+  .news-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+  .news-item p {
+    flex-grow: 1;
+    font-weight: 400;
+  }
+  .news-item a {
+    margin-top: 10px;
+    align-self: flex-start;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .news-item a:hover {
+    text-decoration: underline;
+  }
+
+  /* Mentor Profiles */
+  .mentors {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 30px;
+  }
+  .mentor-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .mentor-card:hover {
+    transform: scale(1.05);
+  }
+  .mentor-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-color);
+  }
+  .mentor-name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+  }
+  .mentor-story {
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+
+  /* Quiz Section */
+  .quiz-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+  }
+  .quiz-question {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  .quiz-options {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .quiz-options li {
+    margin-bottom: 12px;
+  }
+  .quiz-options label {
+    cursor: pointer;
+    user-select: none;
+  }
+  .quiz-options input[type="radio"] {
+    margin-right: 10px;
+  }
+  .quiz-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .quiz-btn:hover {
+    background: #00a28a;
+  }
+  .quiz-result {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+  }
+
+  /* Job Board */
+  .job-board {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .job-filters {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    justify-content: center;
+  }
+  .job-filters select {
+    padding: 8px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .job-listings {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  }
+  .job-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  .job-card:hover {
+    transform: translateY(-5px);
+  }
+  .job-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+  }
+  .job-company {
+    font-weight: 500;
+    margin: 5px 0 10px;
+    color: var(--text-color);
+  }
+  .job-location {
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .job-desc {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+  }
+  .job-apply {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  .job-apply:hover {
+    background: #00a28a;
+  }
+
+  /* Carousel for Trending Tech Stack */
+  .carousel-container {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+  }
+  .carousel-item {
+    min-width: 150px;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: 14px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--primary-color);
+    user-select: none;
+    box-shadow: 0 6px 20px rgba(0,191,166,0.2);
+    margin: 15px;
+    flex-shrink: 0;
+  }
+  .carousel-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .carousel-buttons button {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: background-color 0.3s ease;
+  }
+  .carousel-buttons button:hover {
+    background: #00a28a;
+  }
+
+  /* Animated Scroll Effects */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Chatbot button */
+  .chatbot {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0,191,166,0.5);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+  }
+  .chatbot:hover {
+    background-color: #00a28a;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    .hero h1 {
+      font-size: 2.25rem;
+    }
+    .btn {
+      padding: 12px 24px;
+      font-size: 16px;
+    }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>About Us</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
-  <main>
-    <section>
-      <p>We are a team of passionate educators and developers helping students build future-ready careers through hands-on projects and guided learning paths.</p>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Career Craftly</p>
-  </footer>
+<header>
+  <h1>CareerCraftly</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#explore">Explore</a>
+    <a href="#trends">Trends</a>
+    <a href="#news">News</a>
+    <a href="#mentors">Mentors</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#jobs">Jobs</a>
+  </nav>
+  <button class="toggle-theme" onclick="toggleTheme()">Toggle Dark Mode</button>
+</header>
+
+<section class="hero" id="home">
+  <h1>Empowering Your Tech Career</h1>
+  <p>Explore top niches, track salary trends, and stay ahead in tech.</p>
+  <button class="btn">Get Started</button>
+</section>
+
+<section class="section" id="explore">
+  <h2>Explore Tech Niches</h2>
+  <div class="flip-cards fade-in">
+    <div class="flip-card" tabindex="0" aria-label="AI and Machine Learning">
+      <div class="flip-inner">
+        <div class="flip-front">AI &amp; Machine Learning</div>
+        <div class="flip-back">
+          Automate tasks, build smart models using Python, TensorFlow, etc.<br /><br />
+          <strong>Avg Salary:</strong> ₹25 LPA
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" aria-label="Cybersecurity">
+      <div class="flip-inner">
+        <div class="flip-front">Cybersecurity</div>
+        <div class="flip-back">
+          Protect systems, ethical hacking & penetration testing.<br /><br />
+          <strong>Avg Salary:</strong> ₹15 LPA
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" aria-label="Cloud Computing">
+      <div class="flip-inner">
+        <div class="flip-front">Cloud Computing</div>
+        <div class="flip-back">
+          AWS, Azure, GCP, scalable & distributed systems.<br /><br />
+          <strong>Avg Salary:</strong> ₹20 LPA
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" aria-label="Data Science">
+      <div class="flip-inner">
+        <div class="flip-front">Data Science</div>
+        <div class="flip-back">
+          Data analysis, visualization, predictive modeling.<br /><br />
+          <strong>Avg Salary:</strong> ₹18 LPA
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" tabindex="0" aria-label="Web Development">
+      <div class="flip-inner">
+        <div class="flip-front">Web Development</div>
+        <div class="flip-back">
+          Frontend, backend & full-stack technologies.<br /><br />
+          <strong>Avg Salary:</strong> ₹10 LPA
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trends">
+  <h2>Salary Trends (2019-2025)</h2>
+  <canvas id="salaryChart" aria-label="Interactive Salary Trends Graph" role="img"></canvas>
+</section>
+
+<section class="section" id="news">
+  <h2>Latest Tech News</h2>
+  <div class="news-feed" id="news-feed" aria-live="polite" aria-atomic="true" aria-relevant="additions"></div>
+</section>
+
+<section class="section" id="mentors">
+  <h2>Mentor Success Stories</h2>
+  <div class="mentors fade-in" id="mentors-container">
+    <!-- Mentor cards will be injected here -->
+  </div>
+</section>
+
+<section class="section" id="quiz">
+  <h2>Test Your Skills: Quick Quiz</h2>
+  <div class="quiz-container" aria-live="polite" aria-atomic="true">
+    <div class="quiz-question" id="quiz-question"></div>
+    <ul class="quiz-options" id="quiz-options"></ul>
+    <button class="quiz-btn" id="quiz-submit" aria-label="Submit Quiz Answer">Submit Answer</button>
+    <div class="quiz-result" id="quiz-result" role="alert"></div>
+  </div>
+</section>
+
+<section class="section" id="jobs">
+  <h2>Job Board</h2>
+  <div class="job-filters" role="region" aria-label="Job Filters">
+    <select id="filter-niche" aria-label="Filter by niche">
+      <option value="all">All Niches</option>
+      <option value="AI">AI & Machine Learning</option>
+      <option value="Cybersecurity">Cybersecurity</option>
+      <option value="Cloud">Cloud Computing</option>
+      <option value="DataScience">Data Science</option>
+      <option value="WebDev">Web Development</option>
+    </select>
+    <select id="filter-location" aria-label="Filter by location">
+      <option value="all">All Locations</option>
+      <option value="Remote">Remote</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Delhi">Delhi</option>
+    </select>
+  </div>
+  <div class="job-listings" id="job-listings" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<section class="section" id="tech-carousel">
+  <h2>Trending Tech Stack</h2>
+  <div class="carousel-container" aria-label="Trending Technology Carousel">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-item">Python</div>
+      <div class="carousel-item">JavaScript</div>
+      <div class="carousel-item">React</div>
+      <div class="carousel-item">Node.js</div>
+      <div class="carousel-item">AWS</div>
+      <div class="carousel-item">Docker</div>
+      <div class="carousel-item">Kubernetes</div>
+      <div class="carousel-item">TensorFlow</div>
+    </div>
+    <div class="carousel-buttons">
+      <button id="carousel-prev" aria-label="Previous Tech Stack">&#10094;</button>
+      <button id="carousel-next" aria-label="Next Tech Stack">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<button class="chatbot" aria-label="Open Chat Support" onclick="toggleChat()">💬</button>
+
+<footer>
+  <p>© 2025 CareerCraftly. All rights reserved.</p>
+</footer>
+
+<!-- Load Chart.js CDN for the salary trends graph -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Dark mode toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    if(html.getAttribute('data-theme') === 'dark') {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+  // Load saved theme
+  if(localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  // Salary Trends Chart
+  const ctx = document.getElementById('salaryChart').getContext('2d');
+  const salaryChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+      datasets: [
+        {
+          label: 'AI & Machine Learning',
+          data: [8, 10, 12, 15, 18, 22, 25],
+          borderColor: '#00bfa6',
+          backgroundColor: 'rgba(0,191,166,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#00bfa6',
+          borderWidth: 3,
+        },
+        {
+          label: 'Cybersecurity',
+          data: [5, 6, 8, 10, 12, 14, 15],
+          borderColor: '#f97316',
+          backgroundColor: 'rgba(249,115,22,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#f97316',
+          borderWidth: 3,
+        },
+        {
+          label: 'Cloud Computing',
+          data: [6, 7, 9, 12, 15, 18, 20],
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#3b82f6',
+          borderWidth: 3,
+        },
+        {
+          label: 'Data Science',
+          data: [6, 7, 8, 10, 13, 16, 18],
+          borderColor: '#8b5cf6',
+          backgroundColor: 'rgba(139,92,246,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#8b5cf6',
+          borderWidth: 3,
+        },
+        {
+          label: 'Web Development',
+          data: [4, 5, 6, 7, 8, 9, 10],
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239,68,68,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+          pointBackgroundColor: '#ef4444',
+          borderWidth: 3,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          mode: 'nearest',
+          intersect: false,
+          backgroundColor: '#333',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          padding: 10,
+          cornerRadius: 8,
+          displayColors: false,
+        },
+        legend: {
+          position: 'bottom',
+          labels: { boxWidth: 14, padding: 12, font: { size: 14, weight: '600' } }
+        }
+      },
+      interaction: {
+        mode: 'nearest',
+        intersect: false
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Salary (₹ LPA)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Year'
+          }
+        }
+      }
+    }
+  });
+
+  // Fetch latest tech news (using NewsAPI - replace with your own key or mock)
+  async function fetchNews() {
+    // For demo, we'll use a static example array instead of API call
+    const newsFeed = document.getElementById('news-feed');
+    const exampleNews = [
+      {
+        title: "AI Advancements in 2025",
+        description: "Breakthroughs in neural network efficiency push AI capabilities to new heights.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "Cloud Computing Market Growth",
+        description: "Cloud services see exponential growth as companies migrate workloads.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "Cybersecurity Tips for 2025",
+        description: "New cyber threats emerge, experts recommend advanced protection strategies.",
+        url: "#",
+        urlToImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+      },
+    ];
+
+    exampleNews.forEach(article => {
+      const newsItem = document.createElement('article');
+      newsItem.classList.add('news-item');
+      newsItem.innerHTML = `
+        <img src="${article.urlToImage}" alt="Image related to ${article.title}" />
+        <h3>${article.title}</h3>
+        <p>${article.description}</p>
+        <a href="${article.url}" target="_blank" rel="noopener noreferrer">Read More</a>
+      `;
+      newsFeed.appendChild(newsItem);
+    });
+  }
+  fetchNews();
+
+  // Mentor Profiles data
+  const mentors = [
+    {
+      name: "Ananya Sharma",
+      photo: "https://randomuser.me/api/portraits/women/68.jpg",
+      story: "From a novice coder to a tech lead at Google, Ananya shares her journey and tips."
+    },
+    {
+      name: "Rohit Singh",
+      photo: "https://randomuser.me/api/portraits/men/75.jpg",
+      story: "Self-taught full-stack developer who landed his dream job within 2 years."
+    },
+    {
+      name: "Pooja Verma",
+      photo: "https://randomuser.me/api/portraits/women/44.jpg",
+      story: "Cybersecurity expert who mentors young professionals entering the field."
+    },
+  ];
+  const mentorsContainer = document.getElementById('mentors-container');
+  mentors.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'mentor-card fade-in';
+    card.innerHTML = `
+      <img src="${m.photo}" alt="Photo of mentor ${m.name}" class="mentor-photo" />
+      <h3 class="mentor-name">${m.name}</h3>
+      <p class="mentor-story">${m.story}</p>
+    `;
+    mentorsContainer.appendChild(card);
+  });
+
+  // Quiz Implementation
+  const quizData = {
+    question: "Which programming language is primarily used for AI & Machine Learning?",
+    options: ["Java", "Python", "C#", "PHP"],
+    answer: "Python"
+  };
+  const quizQuestion = document.getElementById('quiz-question');
+  const quizOptions = document.getElementById('quiz-options');
+  const quizSubmit = document.getElementById('quiz-submit');
+  const quizResult = document.getElementById('quiz-result');
+
+  function loadQuiz() {
+    quizQuestion.textContent = quizData.question;
+    quizOptions.innerHTML = '';
+    quizResult.textContent = '';
+    quizData.options.forEach(opt => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <label>
+          <input type="radio" name="quiz" value="${opt}" />
+          ${opt}
+        </label>
+      `;
+      quizOptions.appendChild(li);
+    });
+  }
+
+  quizSubmit.addEventListener('click', () => {
+    const selected = document.querySelector('input[name="quiz"]:checked');
+    if(!selected) {
+      alert('Please select an answer.');
+      return;
+    }
+    if(selected.value === quizData.answer) {
+      quizResult.textContent = "Correct! 🎉";
+      quizResult.style.color = 'var(--primary-color)';
+    } else {
+      quizResult.textContent = `Wrong! The correct answer is ${quizData.answer}.`;
+      quizResult.style.color = '#ef4444';
+    }
+  });
+
+  loadQuiz();
+
+  // Job Board Data and Filtering
+  const jobs = [
+    {
+      title: "AI Research Engineer",
+      company: "InnovateAI",
+      location: "Bangalore",
+      niche: "AI",
+      description: "Work on cutting-edge AI models and algorithms.",
+      url: "#"
+    },
+    {
+      title: "Cloud Solutions Architect",
+      company: "CloudNext",
+      location: "Remote",
+      niche: "Cloud",
+      description: "Design scalable cloud infrastructure solutions.",
+      url: "#"
+    },
+    {
+      title: "Cybersecurity Analyst",
+      company: "SecureTech",
+      location: "Mumbai",
+      niche: "Cybersecurity",
+      description: "Monitor and protect systems from cyber threats.",
+      url: "#"
+    },
+    {
+      title: "Full Stack Developer",
+      company: "WebWorks",
+      location: "Hyderabad",
+      niche: "WebDev",
+      description: "Build robust web applications using React & Node.js.",
+      url: "#"
+    },
+    {
+      title: "Data Scientist",
+      company: "DataSolve",
+      location: "Delhi",
+      niche: "DataScience",
+      description: "Analyze large datasets to generate insights.",
+      url: "#"
+    }
+  ];
+
+  const jobListings = document.getElementById('job-listings');
+  const filterNiche = document.getElementById('filter-niche');
+  const filterLocation = document.getElementById('filter-location');
+
+  function displayJobs() {
+    const nicheFilter = filterNiche.value;
+    const locationFilter = filterLocation.value;
+    jobListings.innerHTML = '';
+
+    const filteredJobs = jobs.filter(job => {
+      return (nicheFilter === 'all' || job.niche === nicheFilter) &&
+             (locationFilter === 'all' || job.location === locationFilter);
+    });
+
+    if(filteredJobs.length === 0) {
+      jobListings.innerHTML = '<p>No jobs match your filters.</p>';
+      return;
+    }
+
+    filteredJobs.forEach(job => {
+      const jobCard = document.createElement('div');
+      jobCard.className = 'job-card fade-in';
+      jobCard.innerHTML = `
+        <h3 class="job-title">${job.title}</h3>
+        <p class="job-company">${job.company}</p>
+        <p class="job-location">${job.location}</p>
+        <p class="job-desc">${job.description}</p>
+        <a href="${job.url}" class="job-apply" target="_blank" rel="noopener noreferrer">Apply Now</a>
+      `;
+      jobListings.appendChild(jobCard);
+    });
+  }
+
+  filterNiche.addEventListener('change', displayJobs);
+  filterLocation.addEventListener('change', displayJobs);
+  displayJobs();
+
+  // Carousel Controls
+  const track = document.getElementById('carousel-track');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  let currentIndex = 0;
+  const itemsToShow = 5; // Number of visible items
+
+  function updateCarousel() {
+    const itemWidth = track.children[0].offsetWidth + 30; // including margin
+    const maxIndex = track.children.length - itemsToShow;
+    if(currentIndex < 0) currentIndex = 0;
+    if(currentIndex > maxIndex) currentIndex = maxIndex;
+    track.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+  }
+  prevBtn.addEventListener('click', () => {
+    currentIndex--;
+    updateCarousel();
+  });
+  nextBtn.addEventListener('click', () => {
+    currentIndex++;
+    updateCarousel();
+  });
+  window.addEventListener('resize', updateCarousel);
+  updateCarousel();
+
+  // Scroll animation for fade-in elements
+  function revealOnScroll() {
+    const elements = document.querySelectorAll('.fade-in');
+    const windowBottom = window.innerHeight;
+
+    elements.forEach(el => {
+      const elTop = el.getBoundingClientRect().top;
+      if(elTop < windowBottom - 100) {
+        el.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // Chatbot toggle (simple alert for demo)
+  function toggleChat() {
+    alert("Chat support is coming soon! Meanwhile, email us at support@careercraftly.com.");
+  }
+</script>
 </body>
 </html>
-
